@@ -1,10 +1,10 @@
-## SOLID Principle Simplified
+# SOLID Principle Simplified
 In Object-oriented software development, SOLID is a popular design principle. Most software developers are implementing the SOLID design principle into their code.
-#### History
+## History
 The SOLID principles were developed by Robert C. Martin in a 2000 essay, “Design Principles and Design Patterns,” although the acronym was coined later by Michael Feathers. In his essay, Martin acknowledged that successful software will change and develop. As it changes, it becomes increasingly complex. Without good design principles, Martin warns that software becomes rigid, fragile, immobile, and vicious. The SOLID principles were developed to combat these problematic design patterns.
-#### Goal
+## Goal
 The broad goal of the SOLID principles is to reduce dependencies so that engineers change one area of software code without impacting others. Additionally, they’re intended to make designs easier to understand, maintain, and extend. Ultimately, using these design principles makes it easier for software engineers to avoid issues and build adaptive, effective, and agile software.
-#### SOLID Acronym
+## SOLID Acronym
 SOLID is an acronym that stands for five key design principles:
 
 1. Single Responsibility Principle (SRP)
@@ -18,7 +18,7 @@ SOLID is an acronym that stands for five key design principles:
 5. Dependency Inversion Principle (DIP)
 
 All five are commonly used by software engineers and provide some important benefits for developers.
-#### Advantages of SOLID Principles
+## Advantages of SOLID Principles
 Achieve the reduction in complexity of the code
 Increase readability, extensibility, and maintenance
 Increase scalability, code flexibility, and readability
@@ -26,7 +26,7 @@ Achieve Better testability
 Reduce tight coupling
 Reduce error and implement Reusability
 Increase Parallel development
-#### Single Responsibility Principle (SRP)
+## Single Responsibility Principle (SRP)
 The Single Responsibility Principle states, "Each software module or class should have only one reason to change“. In other words, we can say that each module or class should have only one responsibility to do.
 
 We must design the software in such a way that everything in a class or module is related to a single responsibility. That is not to say that your class should only have one method or property; you can have multiple members (methods or properties) as long as they are all related to a single responsibility or functionality. As a result of the Single Responsibility Principle, the classes become smaller and cleaner, making them easier to maintain.
@@ -48,7 +48,7 @@ public class Logger
 }</pre>
 
 In this example, the EmailSender class has a single responsibility, which is to send an email. The Logger class has a single responsibility, which is to log messages. Both classes focus on a single, well-defined task and have only one reason to change. This makes the code easier to understand, maintain, and test.
-#### Open-Closed Principle (OCP)
+## Open-Closed Principle (OCP)
 The Open/Closed Principle is one of the SOLID principles of software design, which suggests that software entities such as classes, modules, and functions should be open for extension but closed for modification. This principle states that you should be able to add new functionality to a system without having to modify existing code.
 
 In other words, you should be able to extend the behavior of a system without changing its existing codebase. This is important because modifying existing code can lead to unforeseen consequences and introduce bugs while extending the behavior of a system can improve its functionality without negatively affecting its existing code.
