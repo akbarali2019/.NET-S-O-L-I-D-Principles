@@ -31,7 +31,8 @@ The Single Responsibility Principle states, "Each software module or class shoul
 
 We must design the software in such a way that everything in a class or module is related to a single responsibility. That is not to say that your class should only have one method or property; you can have multiple members (methods or properties) as long as they are all related to a single responsibility or functionality. As a result of the Single Responsibility Principle, the classes become smaller and cleaner, making them easier to maintain.
 
-<pre>public class EmailSender
+<pre>
+    public class EmailSender
 {
     public void SendEmail(string emailAddress, string subject, string message)
     {
@@ -45,7 +46,8 @@ public class Logger
     {
         // Code to log a message
     }
-}</pre>
+}
+</pre>
 
 In this example, the EmailSender class has a single responsibility, which is to send an email. The Logger class has a single responsibility, which is to log messages. Both classes focus on a single, well-defined task and have only one reason to change. This makes the code easier to understand, maintain, and test.
 ## Open-Closed Principle (OCP)
@@ -76,18 +78,95 @@ Now, imagine that we want to add the ability to log messages to a file, without 
 This new FileLogger class adds the ability to log messages to a file, but it does so by extending the ConsoleLogger class, rather than modifying it. This means that the ConsoleLogger class remains unchanged, and we can continue to use it in the same way as before.
 
 Here’s an example of how we could use the FileLogger class to log messages to a file:
-<pre>static void Main(string[] args)
+<pre>
+    static void Main(string[] args)
 {
     ConsoleLogger logger = new ConsoleLogger();
     logger.Log("This is a console log message");
 
     FileLogger fileLogger = new FileLogger();
     fileLogger.Log("This is a file log message", "log.txt");
-}</pre>
+}
+</pre>
 As you can see, we can use the ConsoleLogger and FileLogger classes interchangeably, because they both have a Log method with the same signature. However, the FileLogger class adds new functionality by allowing us to specify a filename for the log messages.
 
 In summary, the Open/Closed Principle is an important principle of software design that suggests that software entities should be open for extension but closed for modification. In the example above, we demonstrated how we can extend the behavior of a logging system by adding a new FileLogger class that extends the existing ConsoleLogger class, without modifying its existing codebase.
 #### Liskov Substitution Principle (LSP)
+The Liskov Substitution Principle (LSP) is a principle in object-oriented programming that states that objects of a superclass should be replaceable with objects of a subclass without affecting the correctness of the program. This means that a subclass should be a subtype of its superclass and that objects of the subclass should be able to be used wherever objects of the superclass are expected without introducing any new bugs or causing any existing functionality to break.
+
+The LSP is important for creating maintainable and flexible code. If a subclass is not a proper subtype of its superclass, then using an object of the subclass in place of an object of the superclass can cause unexpected behavior, which can lead to bugs that are difficult to track down and fix.
+
+To ensure that a subclass is a proper subtype of its superclass, it should fulfill the following requirements:
+
+The subclass should have all the properties and methods of the superclass.
+The subclass should not have any new properties or methods that are not in the superclass.
+The subclass should not reduce the visibility of any properties or methods in the superclass.
+The subclass should not change the behavior of any properties or methods in the superclass in a way that would break existing code that uses the superclass.
+To illustrate the Liskov Substitution Principle, let’s consider a C# example. Suppose we have a Rectangle class that represents a rectangle with a width and height:
+
+<pre>public class Rectangle
+{
+    public int Width { get; set; }
+    public int Height { get; set; }
+
+    public int Area()
+    {
+        return Width * Height;
+    }
+}</pre>
+
+Now, let’s say we want to create a Square class that represents a square with a side length. A square is a special case of a rectangle, where the width and height are always equal. We could define the Square class like this:
+
+<pre>
+    public class Square : Rectangle
+{
+    public int Side { get; set; }
+
+    public new int Width
+    {
+        get { return Side; }
+        set { Side = value; }
+    }
+
+    public new int Height
+    {
+        get { return Side; }
+        set { Side = value; }
+    }
+}
+</pre>
+
+In this implementation, we use the new keyword to shadow the Width and Height properties of the Rectangle class, and replace them with properties that get and set the Side property. This allows us to create a Square object and use it like a Rectangle object, since it inherits all of the properties and methods of the Rectangle class.
+
+However, this implementation violates the Liskov Substitution Principle, because a Square object does not behave like a Rectangle object in all cases. For example, if we create a Rectangle object with a width of 5 and a height of 10, and then replace it with a Square object with a side length of 5, the area will be different:
+
+<pre>Rectangle rectangle = new Rectangle { Width = 5, Height = 10 };
+int rectangleArea = rectangle.Area(); // returns 50
+
+Square square = new Square { Side = 5 };
+int squareArea = square.Area(); // returns 25
+
+// This violates the Liskov Substitution Principle
+rectangle = square;
+int rectangleArea2 = rectangle.Area(); // returns 25, not 50</pre>
+
+To fix this problem and adhere to the Liskov Substitution Principle, we need to change the design of the Square class. One way to do this is to use a separate Square class that does not inherit from Rectangle. This allows us to define a Square object in a way that does not interfere with the behavior of the Rectangle class:
+
+<pre>
+    public class Square
+{
+    public int Side { get; set; }
+
+    public int Area()
+    {
+        return Side * Side;
+    }
+}
+</pre>
+
+By using a separate Square class, we can ensure that a Square object can be substituted for a Rectangle object without violating the correctness of the program.
+
+By following the LSP, we can create a flexible and maintainable codebase, where objects of different classes can be used interchangeably without causing any unexpected behavior. This makes it easier to extend and modify our code as needed, without introducing any new bugs.
 
 #### Interface Segregation Principle (ISP)
 
