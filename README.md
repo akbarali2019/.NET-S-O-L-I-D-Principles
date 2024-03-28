@@ -169,6 +169,91 @@ By using a separate Square class, we can ensure that a Square object can be subs
 By following the LSP, we can create a flexible and maintainable codebase, where objects of different classes can be used interchangeably without causing any unexpected behavior. This makes it easier to extend and modify our code as needed, without introducing any new bugs.
 
 #### Interface Segregation Principle (ISP)
+It states that a client should not be forced to depend on interfaces that it does not use. In other words, it is better to have multiple smaller interfaces that are tailored to specific needs rather than a single large interface that tries to cover everything.
+
+To illustrate the Interface Segregation Principle, let’s consider a C# example. Suppose we have an IPrinter interface that represents a printer, with methods to print and scan:
+
+<pre>
+    public interface IPrinter
+{
+    void Print(string document);
+    void Scan(string document);
+}
+</pre>
+
+Now, let’s say we have two types of printers, a basic printer and a multi-function printer. The basic printer can only print, while the multi-function printer can both print and scan. We could define these classes like this:
+<pre>
+    public class BasicPrinter : IPrinter
+{
+    public void Print(string document)
+    {
+        Console.WriteLine("Printing document: " + document);
+    }
+
+    public void Scan(string document)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class MultiFunctionPrinter : IPrinter
+{
+    public void Print(string document)
+    {
+        Console.WriteLine("Printing document: " + document);
+    }
+
+    public void Scan(string document)
+    {
+        Console.WriteLine("Scanning document: " + document);
+    }
+}
+</pre>
+
+In this implementation, we have implemented the IPrinter interface in both BasicPrinter and MultiFunctionPrinter classes. However, this violates the Interface Segregation Principle, because the BasicPrinter class is forced to implement the Scan method, even though it does not support scanning. This is not ideal, as it creates unnecessary coupling and can lead to confusing or unexpected behavior.
+
+To adhere to the Interface Segregation Principle, we can split the IPrinter interface into two smaller interfaces, one for printing and one for scanning:
+
+<pre>
+    public interface IPrinter
+{
+    void Print(string document);
+}
+
+public interface IScanner
+{
+    void Scan(string document);
+}
+</pre>
+
+Now, we can define the BasicPrinter and MultiFunctionPrinter classes to implement only the interface(s) that they actually use:
+
+<pre>
+    public class BasicPrinter : IPrinter
+{
+    public void Print(string document)
+    {
+        Console.WriteLine("Printing document: " + document);
+    }
+}
+
+public class MultiFunctionPrinter : IPrinter, IScanner
+{
+    public void Print(string document)
+    {
+        Console.WriteLine("Printing document: " + document);
+    }
+
+    public void Scan(string document)
+    {
+        Console.WriteLine("Scanning document: " + document);
+    }
+}
+</pre>
+
+In this new implementation, the BasicPrinter class only needs to implement the IPrinter interface, and the MultiFunctionPrinter class can implement both IPrinter and IScanner interfaces. This adheres to the Interface Segregation Principle, as each class is only dependent on the interfaces that it actually uses.
+
+The Interface Segregation Principle is an important principle of software design that encourages the use of smaller, more focused interfaces instead of large, monolithic ones. In the C# example above, we demonstrated how to refactor the IPrinter interface to adhere to the Interface Segregation Principle and avoid unnecessary coupling and unexpected behavior.
 
 #### Dependency Inversion Principle (DIP)
 
