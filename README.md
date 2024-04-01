@@ -32,7 +32,7 @@ The Single Responsibility Principle states, "Each software module or class shoul
 We must design the software in such a way that everything in a class or module is related to a single responsibility. That is not to say that your class should only have one method or property; you can have multiple members (methods or properties) as long as they are all related to a single responsibility or functionality. As a result of the Single Responsibility Principle, the classes become smaller and cleaner, making them easier to maintain.
 
 <pre>
-    public class EmailSender
+public class EmailSender
 {
     public void SendEmail(string emailAddress, string subject, string message)
     {
@@ -79,7 +79,7 @@ This new FileLogger class adds the ability to log messages to a file, but it doe
 
 Here’s an example of how we could use the FileLogger class to log messages to a file:
 <pre>
-    static void Main(string[] args)
+static void Main(string[] args)
 {
     ConsoleLogger logger = new ConsoleLogger();
     logger.Log("This is a console log message");
@@ -104,7 +104,8 @@ The subclass should not reduce the visibility of any properties or methods in th
 The subclass should not change the behavior of any properties or methods in the superclass in a way that would break existing code that uses the superclass.
 To illustrate the Liskov Substitution Principle, let’s consider a C# example. Suppose we have a Rectangle class that represents a rectangle with a width and height:
 
-<pre>public class Rectangle
+<pre>
+public class Rectangle
 {
     public int Width { get; set; }
     public int Height { get; set; }
@@ -118,7 +119,7 @@ To illustrate the Liskov Substitution Principle, let’s consider a C# example. 
 Now, let’s say we want to create a Square class that represents a square with a side length. A square is a special case of a rectangle, where the width and height are always equal. We could define the Square class like this:
 
 <pre>
-    public class Square : Rectangle
+public class Square : Rectangle
 {
     public int Side { get; set; }
 
@@ -140,7 +141,8 @@ In this implementation, we use the new keyword to shadow the Width and Height pr
 
 However, this implementation violates the Liskov Substitution Principle, because a Square object does not behave like a Rectangle object in all cases. For example, if we create a Rectangle object with a width of 5 and a height of 10, and then replace it with a Square object with a side length of 5, the area will be different:
 
-<pre>Rectangle rectangle = new Rectangle { Width = 5, Height = 10 };
+<pre>
+Rectangle rectangle = new Rectangle { Width = 5, Height = 10 };
 int rectangleArea = rectangle.Area(); // returns 50
 
 Square square = new Square { Side = 5 };
@@ -153,7 +155,7 @@ int rectangleArea2 = rectangle.Area(); // returns 25, not 50</pre>
 To fix this problem and adhere to the Liskov Substitution Principle, we need to change the design of the Square class. One way to do this is to use a separate Square class that does not inherit from Rectangle. This allows us to define a Square object in a way that does not interfere with the behavior of the Rectangle class:
 
 <pre>
-    public class Square
+public class Square
 {
     public int Side { get; set; }
 
@@ -174,7 +176,7 @@ It states that a client should not be forced to depend on interfaces that it doe
 To illustrate the Interface Segregation Principle, let’s consider a C# example. Suppose we have an IPrinter interface that represents a printer, with methods to print and scan:
 
 <pre>
-    public interface IPrinter
+public interface IPrinter
 {
     void Print(string document);
     void Scan(string document);
@@ -183,7 +185,7 @@ To illustrate the Interface Segregation Principle, let’s consider a C# example
 
 Now, let’s say we have two types of printers, a basic printer and a multi-function printer. The basic printer can only print, while the multi-function printer can both print and scan. We could define these classes like this:
 <pre>
-    public class BasicPrinter : IPrinter
+public class BasicPrinter : IPrinter
 {
     public void Print(string document)
     {
@@ -215,7 +217,7 @@ In this implementation, we have implemented the IPrinter interface in both Basic
 To adhere to the Interface Segregation Principle, we can split the IPrinter interface into two smaller interfaces, one for printing and one for scanning:
 
 <pre>
-    public interface IPrinter
+public interface IPrinter
 {
     void Print(string document);
 }
@@ -229,7 +231,7 @@ public interface IScanner
 Now, we can define the BasicPrinter and MultiFunctionPrinter classes to implement only the interface(s) that they actually use:
 
 <pre>
-    public class BasicPrinter : IPrinter
+public class BasicPrinter : IPrinter
 {
     public void Print(string document)
     {
@@ -261,7 +263,7 @@ It states that high-level modules should not depend on low-level modules. Instea
 To illustrate the Dependency Inversion Principle, let’s consider a C# example. Suppose we have a Car class that needs to use a FuelInjector class to inject fuel into the engine. In this example, the Car class represents a high-level module, and the FuelInjector class represents a low-level module.
 
 <pre>
-    public class Car
+public class Car
 {
     private readonly FuelInjector _fuelInjector;
 
@@ -291,7 +293,7 @@ In this implementation, the Car class directly instantiates a FuelInjector objec
 To adhere to the Dependency Inversion Principle, we can use an abstraction, such as an interface or an abstract class, to decouple the Car class from the FuelInjector class. We can define an IFuelInjector interface to represent the fuel injection behavior, and then inject an instance of this interface into the Car class:
 
 <pre>
-    public interface IFuelInjector
+public interface IFuelInjector
 {
     void InjectFuel();
 }
