@@ -256,4 +256,71 @@ In this new implementation, the BasicPrinter class only needs to implement the I
 The Interface Segregation Principle is an important principle of software design that encourages the use of smaller, more focused interfaces instead of large, monolithic ones. In the C# example above, we demonstrated how to refactor the IPrinter interface to adhere to the Interface Segregation Principle and avoid unnecessary coupling and unexpected behavior.
 
 #### Dependency Inversion Principle (DIP)
+It states that high-level modules should not depend on low-level modules. Instead, both should depend on abstractions. This promotes loose coupling and flexibility, making it easier to make changes without affecting other parts of the system.
+
+To illustrate the Dependency Inversion Principle, let’s consider a C# example. Suppose we have a Car class that needs to use a FuelInjector class to inject fuel into the engine. In this example, the Car class represents a high-level module, and the FuelInjector class represents a low-level module.
+
+<pre>
+    public class Car
+{
+    private readonly FuelInjector _fuelInjector;
+
+    public Car()
+    {
+        _fuelInjector = new FuelInjector();
+    }
+
+    public void Start()
+    {
+        _fuelInjector.InjectFuel();
+        // other code to start the car
+    }
+}
+
+public class FuelInjector
+{
+    public void InjectFuel()
+    {
+        Console.WriteLine("Injecting fuel into engine.");
+    }
+}
+</pre>
+
+In this implementation, the Car class directly instantiates a FuelInjector object in its constructor. This violates the Dependency Inversion Principle because the Car class is dependent on a low-level module, making it inflexible and tightly coupled.
+
+To adhere to the Dependency Inversion Principle, we can use an abstraction, such as an interface or an abstract class, to decouple the Car class from the FuelInjector class. We can define an IFuelInjector interface to represent the fuel injection behavior, and then inject an instance of this interface into the Car class:
+
+<pre>
+    public interface IFuelInjector
+{
+    void InjectFuel();
+}
+
+public class Car
+{
+    private readonly IFuelInjector _fuelInjector;
+
+    public Car(IFuelInjector fuelInjector)
+    {
+        _fuelInjector = fuelInjector;
+    }
+
+    public void Start()
+    {
+        _fuelInjector.InjectFuel();
+        // other code to start the car
+    }
+}
+
+public class FuelInjector : IFuelInjector
+{
+    public void InjectFuel()
+    {
+        Console.WriteLine("Injecting fuel into engine.");
+    }
+}
+</pre>
+
+In this new implementation, the Car class is no longer dependent on the FuelInjector class, but rather on the IFuelInjector interface. We can now create multiple implementations of the IFuelInjector interface, which can be used to inject fuel into the engine in different ways. This makes the Car class more flexible and easier to change, as it is no longer tightly coupled to the FuelInjector class.
+
 
